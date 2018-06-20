@@ -3,8 +3,6 @@ package shokujinjp
 import (
 	"encoding/csv"
 	"net/http"
-
-	"github.com/shokujinjp/data/gen_weekly/record"
 )
 
 func readCSVFromUrl(url string) ([][]string, error) {
@@ -23,8 +21,8 @@ func readCSVFromUrl(url string) ([][]string, error) {
 	return data, nil
 }
 
-func GetAllMenuData() ([]record.Record, error) {
-	var all []record.Record
+func GetAllMenuData() ([]Menu, error) {
+	var all []Menu
 
 	fixedUrl := "https://raw.githubusercontent.com/shokujinjp/data/master/fixed.csv"
 	fixedData, err := readCSVFromUrl(fixedUrl)
@@ -32,7 +30,7 @@ func GetAllMenuData() ([]record.Record, error) {
 		return nil, err
 	}
 	for _, v := range fixedData[1:] {
-		d := record.UnmarshalRecordString(v)
+		d := UnmarshalMenuByStringSlice(v)
 
 		all = append(all, d)
 	}
@@ -43,7 +41,7 @@ func GetAllMenuData() ([]record.Record, error) {
 		return nil, err
 	}
 	for _, v := range weeklyData[1:] {
-		d := record.UnmarshalRecordString(v)
+		d := UnmarshalMenuByStringSlice(v)
 
 		all = append(all, d)
 	}
