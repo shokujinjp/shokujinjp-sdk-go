@@ -1,4 +1,4 @@
-package sdk
+package shokujinjp
 
 import (
 	"encoding/csv"
@@ -23,7 +23,7 @@ func readCSVFromUrl(url string) ([][]string, error) {
 	return data, nil
 }
 
-func GetAllData() ([]record.Record, error) {
+func GetAllMenuData() ([]record.Record, error) {
 	var all []record.Record
 
 	fixedUrl := "https://raw.githubusercontent.com/shokujinjp/data/master/fixed.csv"
