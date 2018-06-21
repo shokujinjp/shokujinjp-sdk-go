@@ -21,7 +21,7 @@ func readCSVFromUrl(url string) ([][]string, error) {
 	return data, nil
 }
 
-func GetAllMenuData() ([]Menu, error) {
+func GetMenuAllData() ([]Menu, error) {
 	var all []Menu
 
 	fixedUrl := "https://raw.githubusercontent.com/shokujinjp/data/master/fixed.csv"
