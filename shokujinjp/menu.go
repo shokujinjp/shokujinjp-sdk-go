@@ -1,5 +1,7 @@
 package shokujinjp
 
+import "time"
+
 type Menu struct {
 	Id          string `csv:"id" json:"id"`
 	Name        string `csv:"name" json:"name"`
@@ -47,4 +49,48 @@ func UnmarshalMenuByStringSlice(menuStr []string) Menu {
 	}
 
 	return d
+}
+
+func GetMenuDateData(t time.Time) ([]Menu, error) {
+	var today []Menu
+	wdays := [...]string{"日", "月", "火", "水", "木", "金", "土"}
+	inputWdays := wdays[t.Weekday()]
+	now := time.Now()
+
+	all, err := GetMenuAllData()
+	if err != nil {
+		return nil, err
+	}
+
+	for _, m := range all {
+		if m.DayStart != "" {
+			dayStart, err := time.Parse(dayFormat, m.DayStart)
+			dayEnd, err := time.Parse(dayFormat, m.DayEnd)
+			if err != nil {
+				return nil, err
+			}
+
+			if (dayStart.Before(now)) && (dayEnd.After(now)) {
+				today = append(today, m)
+				continue
+			}
+
+			// if can't order day, not append
+			continue
+		}
+
+		if m.CanWeekday == "" {
+			// if blank, can order all wdays
+			today = append(today, m)
+			continue
+		}
+
+		if m.CanWeekday == inputWdays {
+			today = append(today, m)
+			continue
+		}
+
+	}
+
+	return today, nil
 }

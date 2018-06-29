@@ -5,6 +5,10 @@ import (
 	"net/http"
 )
 
+const (
+	dayFormat = "2006-01-02"
+)
+
 func readCSVFromUrl(url string) ([][]string, error) {
 	resp, err := http.Get(url)
 	if err != nil {
