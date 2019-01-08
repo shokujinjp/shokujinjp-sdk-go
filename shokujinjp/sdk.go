@@ -50,5 +50,7 @@ func GetMenuAllData() ([]Menu, error) {
 		all = append(all, d)
 	}
 
+	all = SortByCategory(all)
+
 	return all, nil
 }
