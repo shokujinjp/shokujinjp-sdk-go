@@ -4,6 +4,7 @@ type CategoryType int
 
 const (
 	NoCategory CategoryType = iota
+  Limited
 	SetMeal
 	Rice
 	Soup
@@ -12,6 +13,7 @@ const (
 var (
 	categorys = []string{
 		"不明",
+    "期間限定",
 		"定食",
 		"ご飯類",
 		"スープ類",
@@ -20,6 +22,8 @@ var (
 
 func (c CategoryType) String() string {
 	switch c {
+  case Limited:
+    return categorys[Limited]
 	case SetMeal:
 		return categorys[SetMeal]
 	case Rice:
@@ -33,6 +37,8 @@ func (c CategoryType) String() string {
 
 func ToCategory(s string) int {
 	switch s {
+  case "期間限定":
+    return int(Limited)
 	case "定食":
 		return int(SetMeal)
 	case "ご飯類":
