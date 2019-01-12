@@ -50,5 +50,16 @@ func GetMenuAllData() ([]Menu, error) {
 		all = append(all, d)
 	}
 
+  limitedUrl := "https://raw.githubusercontent.com/shokujinjp/data/master/limited.csv"
+  limitedData, err := readCSVFromUrl(limitedUrl)
+  if err != nil {
+    return nil, err
+  }
+  for _, v := range limitedData[1:] {
+    d := UnmarshalMenuByStringSlice(v)
+
+    all = append(all, d)
+  }
+
 	return all, nil
 }
