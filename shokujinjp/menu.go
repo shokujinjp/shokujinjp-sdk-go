@@ -64,8 +64,8 @@ func GetMenuDateData(t time.Time) ([]Menu, error) {
 
 	for _, m := range all {
 		if m.DayStart != "" {
-			dayStart, err := time.Parse(dayFormat, m.DayStart)
-			dayEnd, err := time.Parse(dayFormat, m.DayEnd)
+			dayStart, err := time.Parse(DayFormat, m.DayStart)
+			dayEnd, err := time.Parse(DayFormat, m.DayEnd)
 			if err != nil {
 				return nil, err
 			}
