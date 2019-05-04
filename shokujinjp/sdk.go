@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	dayFormat = "2006-01-02"
+	DayFormat = "2006-01-02"
 )
 
 func readCSVFromUrl(url string) ([][]string, error) {
