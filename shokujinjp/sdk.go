@@ -6,7 +6,11 @@ import (
 )
 
 const (
-	DayFormat = "2006-01-02"
+	DayFormat  = "2006-01-02"
+	BaseURL    = "https://raw.githubusercontent.com/shokujinjp/data/master"
+	FixedURL   = BaseURL + "/fixed.csv"
+	WeeklyURL  = BaseURL + "/weekly.csv"
+	LimitedURL = BaseURL + "/limited.csv"
 )
 
 func readCSVFromUrl(url string) ([][]string, error) {
@@ -28,8 +32,7 @@ func readCSVFromUrl(url string) ([][]string, error) {
 func GetMenuAllData() ([]Menu, error) {
 	var all []Menu
 
-	fixedUrl := "https://raw.githubusercontent.com/shokujinjp/data/master/fixed.csv"
-	fixedData, err := readCSVFromUrl(fixedUrl)
+	fixedData, err := readCSVFromUrl(FixedURL)
 	if err != nil {
 		return nil, err
 	}
@@ -39,8 +42,7 @@ func GetMenuAllData() ([]Menu, error) {
 		all = append(all, d)
 	}
 
-	weeklyUrl := "https://raw.githubusercontent.com/shokujinjp/data/master/weekly.csv"
-	weeklyData, err := readCSVFromUrl(weeklyUrl)
+	weeklyData, err := readCSVFromUrl(WeeklyURL)
 	if err != nil {
 		return nil, err
 	}
@@ -50,8 +52,7 @@ func GetMenuAllData() ([]Menu, error) {
 		all = append(all, d)
 	}
 
-	limitedUrl := "https://raw.githubusercontent.com/shokujinjp/data/master/limited.csv"
-	limitedData, err := readCSVFromUrl(limitedUrl)
+	limitedData, err := readCSVFromUrl(LimitedURL)
 	if err != nil {
 		return nil, err
 	}

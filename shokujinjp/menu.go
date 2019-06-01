@@ -51,11 +51,34 @@ func UnmarshalMenuByStringSlice(menuStr []string) Menu {
 	return d
 }
 
+func checkCanOrder(m Menu) (bool, error) {
+	// if call this func, already check "m.DayStart is not black"
+	now := time.Now()
+
+	if m.DayEnd == "" {
+		return true, nil
+	}
+	dayStart, err := time.Parse(DayFormat, m.DayStart)
+	if err != nil {
+		return false, err
+	}
+
+	dayEnd, err := time.Parse(DayFormat, m.DayEnd)
+	if err != nil {
+		return false, err
+	}
+
+	if (dayStart.Before(now)) && (dayEnd.After(now)) {
+		return true, nil
+	}
+
+	return false, nil
+}
+
 func GetMenuDateData(t time.Time) ([]Menu, error) {
 	var today []Menu
 	wdays := [...]string{"日", "月", "火", "水", "木", "金", "土"}
 	inputWdays := wdays[t.Weekday()]
-	now := time.Now()
 
 	all, err := GetMenuAllData()
 	if err != nil {
@@ -64,13 +87,11 @@ func GetMenuDateData(t time.Time) ([]Menu, error) {
 
 	for _, m := range all {
 		if m.DayStart != "" {
-			dayStart, err := time.Parse(DayFormat, m.DayStart)
-			dayEnd, err := time.Parse(DayFormat, m.DayEnd)
+			b, err := checkCanOrder(m)
 			if err != nil {
 				return nil, err
 			}
-
-			if (dayStart.Before(now)) && (dayEnd.After(now)) {
+			if b == true {
 				today = append(today, m)
 				continue
 			}
