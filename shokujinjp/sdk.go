@@ -62,5 +62,9 @@ func GetMenuAllData() ([]Menu, error) {
 		all = append(all, d)
 	}
 
+	for i, a := range all {
+		all[i] = a.toDisplayName()
+	}
+
 	return all, nil
 }

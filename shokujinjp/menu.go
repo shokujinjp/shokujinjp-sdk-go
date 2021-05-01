@@ -97,8 +97,6 @@ func GetMenuDateData(t time.Time) ([]Menu, error) {
 	}
 
 	for _, m := range all {
-		m = m.toDisplayName()
-
 		if m.DayStart != "" {
 			b, err := checkCanOrder(m, t)
 			if err != nil {

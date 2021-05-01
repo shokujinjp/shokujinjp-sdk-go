@@ -1,5 +1,7 @@
 package shokujinjp
 
+import "strings"
+
 type CategoryType int
 
 const (
@@ -8,44 +10,51 @@ const (
 	SetMeal
 	Rice
 	Soup
+	Noodle
+	NewMenu
+	Drink
+	AlaCarte
+	Snacks
+	Vegetable
+	Meat
+	SeaFood
+	ServiceSet
 )
 
 var (
-	categorys = []string{
+	categories = []string{
 		"不明",
 		"期間限定",
 		"定食",
 		"ご飯類",
 		"スープ類",
+		"麺類",
+		"新メニュー",
+		"飲み物",
+		"おつまみ",
+		"点心類",
+		"野菜類",
+		"牛・豚・鷄・ラム",
+		"海鮮類",
+		"サービスセット",
 	}
 )
 
 func (c CategoryType) String() string {
-	switch c {
-	case Limited:
-		return categorys[Limited]
-	case SetMeal:
-		return categorys[SetMeal]
-	case Rice:
-		return categorys[Rice]
-	case Soup:
-		return categorys[Soup]
+	input := int(c)
+	if input < 0 || len(categories) < input {
+		return categories[NoCategory]
 	}
 
-	return categorys[NoCategory]
+	return categories[c]
 }
 
 func Category(s string) CategoryType {
-	switch s {
-	case "期間限定":
-		return Limited
-	case "定食":
-		return SetMeal
-	case "ご飯類":
-		return Rice
-	case "スープ類":
-		return Soup
+	for i, category := range categories {
+		if strings.EqualFold(s, category) {
+			return CategoryType(i)
+		}
 	}
 
-	return -1
+	return NoCategory
 }
