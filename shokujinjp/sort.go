@@ -14,7 +14,7 @@ func SortByCategory(menus []Menu) []Menu {
 	})
 
 	sort.SliceStable(menus, func(i, j int) bool {
-		return ToCategory(menus[i].Category) < ToCategory(menus[j].Category)
+		return Category(menus[i].Category) < Category(menus[j].Category)
 	})
 
 	return menus

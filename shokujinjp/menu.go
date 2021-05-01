@@ -1,6 +1,7 @@
 package shokujinjp
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -53,6 +54,16 @@ func UnmarshalMenuByStringSlice(menuStr []string) Menu {
 	return d
 }
 
+func (m Menu) toDisplayName() Menu {
+	result := m
+
+	if Category(m.Category) == SetMeal {
+		result.Name = fmt.Sprintf("%s%s", m.Name, SetMeal.String())
+	}
+
+	return result
+}
+
 func checkCanOrder(m Menu, date time.Time) (bool, error) {
 	// if call this func, already check "m.DayStart is not black"
 	if m.DayEnd == "" {
@@ -86,6 +97,8 @@ func GetMenuDateData(t time.Time) ([]Menu, error) {
 	}
 
 	for _, m := range all {
+		m = m.toDisplayName()
+
 		if m.DayStart != "" {
 			b, err := checkCanOrder(m, t)
 			if err != nil {
