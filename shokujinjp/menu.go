@@ -1,6 +1,8 @@
 package shokujinjp
 
-import "time"
+import (
+	"time"
+)
 
 type Menu struct {
 	Id          string `csv:"id" json:"id"`
@@ -51,10 +53,8 @@ func UnmarshalMenuByStringSlice(menuStr []string) Menu {
 	return d
 }
 
-func checkCanOrder(m Menu) (bool, error) {
+func checkCanOrder(m Menu, date time.Time) (bool, error) {
 	// if call this func, already check "m.DayStart is not black"
-	now := time.Now()
-
 	if m.DayEnd == "" {
 		return true, nil
 	}
@@ -68,7 +68,7 @@ func checkCanOrder(m Menu) (bool, error) {
 		return false, err
 	}
 
-	if (dayStart.Before(now)) && (dayEnd.After(now)) {
+	if (dayStart.Before(date)) && (dayEnd.After(date)) {
 		return true, nil
 	}
 
@@ -87,7 +87,7 @@ func GetMenuDateData(t time.Time) ([]Menu, error) {
 
 	for _, m := range all {
 		if m.DayStart != "" {
-			b, err := checkCanOrder(m)
+			b, err := checkCanOrder(m, t)
 			if err != nil {
 				return nil, err
 			}
