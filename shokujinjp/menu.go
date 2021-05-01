@@ -15,7 +15,7 @@ type Menu struct {
 	Description string `csv:"description" json:"description"`
 }
 
-func (m *Menu) MarshalString() string {
+func (m *Menu) String() string {
 	return m.Id + "," +
 		m.Name + "," +
 		m.Price + "," +
